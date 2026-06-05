@@ -1,0 +1,457 @@
+{
+  "info": {
+    "_postman_id": "a310b7dd-9dc4-43bf-80cc-1be5f78933bd",
+    "name": "API-inv.bg",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28812700"
+  },
+  "item": [
+    {
+      "name": "GET /firm - auth smoke",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// 1. Status code\r",
+              "pm.test(\"Status is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "// 2. Format — отговорът е JSON\r",
+              "pm.test(\"Response is JSON\", function () {\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "// 3. Data — правилната фирма\r",
+              "pm.test(\"Firm id is 122616\", function () {\r",
+              "    pm.expect(pm.response.json().id).to.eql(122616);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{inv_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/firm",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "firm"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /firm - no auth (negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Rejects with 401 when no token\", function () {\r",
+              "    pm.response.to.have.status(401);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/firm",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "firm"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /firm - invalid token (negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Rejects with 401 for invalid token\", function () {\r",
+              "    pm.response.to.have.status(401);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "invalid123",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/firm",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "firm"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get /clients - list (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Response is JSON\", () => pm.response.to.be.json);\r",
+              "pm.test(\"Has pagination + clients array\", () => {\r",
+              "    const b = pm.response.json();\r",
+              "    pm.expect(b.total).to.be.a('number');\r",
+              "    pm.expect(b.clients).to.be.an('array');\r",
+              "    pm.expect(b).to.have.property('next_page');\r",
+              "    pm.expect(b).to.have.property('prev_page');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{inv_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/clients",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "clients"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /clients (create) (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status is 201 Created\", () => pm.response.to.have.status(201));\r",
+              "pm.test(\"Returns an id\", () => {\r",
+              "    const id = pm.response.json().id;\r",
+              "    pm.expect(id).to.be.a('number');\r",
+              "    pm.collectionVariables.set(\"client_id\", id);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const b = String(Math.floor(100000000 + Math.random() * 900000000));\r",
+              "pm.collectionVariables.set(\"bulstat\", b);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{inv_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Test Client QA\",\r\n  \"bulstat\": \"{{bulstat}}\",\r\n  \"mol\": \"Ivan Ivanov\",\r\n  \"is_reg_vat\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/clients",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "clients"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /clients/{{client_id}} (verify created)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status is 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Client data matches what was created\", () => {\r",
+              "    const b = pm.response.json();\r",
+              "    pm.expect(b.name).to.eql(\"Test Client QA\");\r",
+              "    pm.expect(b.bulstat).to.eql(pm.collectionVariables.get(\"bulstat\"));\r",
+              "    pm.expect(b.mol).to.eql(\"Ivan Ivanov\");\r",
+              "    pm.expect(b.is_reg_vat).to.eql(false);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{inv_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/clients/{{client_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "clients",
+            "{{client_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /clients/{{client_id}} — delete (204",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status is 204 No Content\", () => pm.response.to.have.status(204));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{inv_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/clients/{{client_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "clients",
+            "{{client_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /clients/{{client_id}} (verify deleted)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Deleted client returns 404\", () => pm.response.to.have.status(404));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{inv_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/clients/{{client_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "clients",
+            "{{client_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /clients (validation - negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Missing required field returns 400\", () => pm.response.to.have.status(400));\r",
+              "pm.test(\"Error names the missing field\", () => {\r",
+              "    pm.expect(pm.response.json().error).to.include(\"bulstat\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{inv_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"Test\", \"mol\": \"Ivan\", \"is_reg_vat\": false }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/clients",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "clients"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "client_id",
+      "value": ""
+    },
+    {
+      "key": "bulstat",
+      "value": ""
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Never commit secrets / env exports
+secrets.local.md
+.env
+*.token
+*postman_environment.json
+# OS junk
+Thumbs.db
+.DS_Store
+desktop.ini

@@ -1,0 +1,22 @@
+name: Newman API Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g newman
+      - run: newman run collections/dummyjson.postman_collection.json -e environments/dummyjson-dev.postman_environment.json --reporters cli,json --reporter-json-export newman-report.json
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: newman-report.json
