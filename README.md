@@ -13,6 +13,8 @@ and API test automation. Each folder is a self-contained project with its own RE
 | [**qa-test-design-demoqa**](./qa-test-design-demoqa) | **Test design (EP + BVA)** — 9 test cases authored and executed in **Jira (Kanban)** with evidence. |
 | [**exploratory-testing-academybugs**](./exploratory-testing-academybugs) | **Exploratory testing (SBTM)** — charter-driven, time-boxed session; 25-defect session sheet with severity triage; professional debrief. |
 | [**sql-hr-queries**](./sql-hr-queries) | **SQL for QA** — data-validation & analysis queries on an HR database: JOINs, **anti-joins** (orphaned/missing data), aggregations, date functions, DML/DDL. |
+| [**java-oop-banking**](./java-oop-banking) | **Java OOP** — banking model: encapsulation, inheritance, polymorphism, exception handling, static state. Runnable console demo. |
+| [**java-oop-library**](./java-oop-library) | **Java OOP** — library model: **abstract classes**, **interfaces**, polymorphism, collections (`List`), exception handling. Runnable console demo. |
 
 ## Skills shown
 - Test design: Equivalence Partitioning, Boundary Value Analysis
@@ -20,6 +22,7 @@ and API test automation. Each folder is a self-contained project with its own RE
 - Bug reporting: repro steps, Severity vs Priority, triage
 - API testing: REST, Postman, assertions (status/format/data), risk-based prioritisation
 - **SQL: JOINs, anti-joins for data integrity, aggregations, date functions, DML/DDL**
+- **Java OOP: encapsulation, inheritance, polymorphism, abstraction (abstract classes + interfaces), collections, exceptions**
 - Automation/CI: Newman, GitHub Actions
 - Tools: Postman, Jira, Git/GitHub, **DBeaver/MySQL**
 
