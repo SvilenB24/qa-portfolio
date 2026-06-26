@@ -25,5 +25,16 @@ public class LibraryDemo {
             System.out.println("Caught error: " + e.getMessage());
         }
         System.out.println("Program continues to run.");
+
+        // --- Members: composition + method overloading ---
+        Member ivan = new Member("Ivan Ivanov", "M001");
+        library.borrowItem("The Super Gatsby", ivan);
+        library.borrowItem("Inception", ivan);
+
+        System.out.println("\n" + ivan);
+        System.out.println("Borrowed by " + ivan.getName() + ":");
+        for (LibraryItem item : ivan.getBorrowedItems()) {
+            System.out.println("  - " + item);
+        }
     }
 }

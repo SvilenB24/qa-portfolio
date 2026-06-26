@@ -31,4 +31,18 @@ public class Library {
         }
         throw new IllegalArgumentException("No item found with title: " + title);
     }
+
+    // Overloaded: borrow on behalf of a member and record it with them
+    public boolean borrowItem(String title, Member member) {
+        for (LibraryItem item : items) {
+            if (item.getTitle().equals(title)) {
+                if (item.borrow()) {
+                    member.getBorrowedItems().add(item); // link the item to the member
+                    return true;
+                }
+                return false; // found, but already taken
+            }
+        }
+        throw new IllegalArgumentException("No item found with title: " + title);
+    }
 }
