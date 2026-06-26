@@ -15,6 +15,8 @@ and API test automation. Each folder is a self-contained project with its own RE
 | [**sql-hr-queries**](./sql-hr-queries) | **SQL for QA** — data-validation & analysis queries on an HR database: JOINs, **anti-joins** (orphaned/missing data), aggregations, date functions, DML/DDL. |
 | [**java-oop-banking**](./java-oop-banking) | **Java OOP** — banking model: encapsulation, inheritance, polymorphism, exception handling, static state. Runnable console demo. |
 | [**java-oop-library**](./java-oop-library) | **Java OOP** — library model: **abstract classes**, **interfaces**, polymorphism, collections (`List`), exception handling. Runnable console demo. |
+| [**java-oop-user-management**](./java-oop-user-management) | **Java OOP** — user/admin roles via interfaces + abstract class, **interface inheritance** (`AdminUser extends User`), composition, polymorphism (`instanceof`), edge-case handling. |
+| [**java-oop-notepad**](./java-oop-notepad) | **Java OOP** — interface + inheritance + a **password-protection pattern** (secured notepad overrides each operation and delegates via `super`). |
 
 ## Skills shown
 - Test design: Equivalence Partitioning, Boundary Value Analysis
