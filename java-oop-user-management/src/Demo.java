@@ -16,7 +16,8 @@ public class Demo {
         admin.createUser("u3", false);
         admin.createUser("u4", false);
         admin.createUser("u5", false);
-        admin.createUser("u6", false); // 11th -> database full
+        admin.createUser("u6", false);
+        admin.createUser("u7", false);
 
         admin.printAllUsers();
 
